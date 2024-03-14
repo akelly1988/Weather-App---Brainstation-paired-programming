@@ -12,7 +12,11 @@ function Form() {
   const [searchTerm, setSearchTerm] = useState("");
   const [weather, setWeather] = useState("");
   const [error, setError] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
+  const [currency, setCurrency] = useState("");
+  const [country, setCountry] = useState("");
+  const [gbp, setGbp] = useState("");
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -27,7 +31,6 @@ function Form() {
       return;
     }
 
-    console.log(searchTerm);
     const getDestination = async (searchTerm) => {
       try {
         const { data } = await axios.get(
@@ -35,10 +38,14 @@ function Form() {
         );
         setWeather(data);
         setError(false);
+        setCountry(data.sys.country);
+        setSubmitted(true);
       } catch (error) {
         setWeather("");
         setSearchTerm("");
         setError(true);
+        setCurrency("");
+        setSubmitted(true);
       }
     };
     getDestination(searchTerm);
@@ -80,8 +87,12 @@ function Form() {
         </div>
       </form>
       {weather && <Weather weather={weather} />}
-      {!weather && !error && <p>Loading</p>}
-      {error && <p>Place does not exist. Maybe exist in parallel universe</p>}
+      {error && (
+        <p className="error">
+          Place does not exist. Maybe exist in parallel universe
+        </p>
+      )}
+      {currency && <Currency currency={currency} gbp={gbp} />}
     </>
   );
 }
