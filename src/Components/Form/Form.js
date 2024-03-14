@@ -48,7 +48,7 @@ function Form() {
           <input
             className="searchInput"
             type="text"
-            placeholder="Search"
+            placeholder="Enter your destination"
             value={searchTerm}
             onChange={handleChange}
           />
