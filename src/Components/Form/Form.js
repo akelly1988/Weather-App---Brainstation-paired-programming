@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Weather from "../Weather/Weather";
+import "./Form.scss";
+
 const API_KEY_WEATHER = "96f23f416e2628f78d7fd10cc947516f";
 const BASE_URL_WEATHER = "https://api.openweathermap.org/data/2.5/weather";
 
@@ -39,13 +41,18 @@ function Form() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={handleChange}
-        />
-        <button type="submit">Search</button>
+        <div className="searchBox">
+          <input
+            className="searchInput"
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleChange}
+          />
+          <button className="searchButton" type="submit">
+            <i className="material-icons"></i>
+          </button>
+        </div>
       </form>
       {weather && <Weather weather={weather} />}
       {!weather && <p>Nothing</p>}
