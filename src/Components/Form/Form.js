@@ -47,7 +47,8 @@ function Form() {
         />
         <button type="submit">Search</button>
       </form>
-      <Weather />
+      {weather && <Weather weather={weather} />}
+      {!weather && <p>Nothing</p>}
     </>
   );
 }
