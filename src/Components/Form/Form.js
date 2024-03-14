@@ -9,6 +9,8 @@ const BASE_URL_WEATHER = "https://api.openweathermap.org/data/2.5/weather";
 function Form() {
   const [searchTerm, setSearchTerm] = useState("");
   const [weather, setWeather] = useState("");
+  const [error, setError] = useState(false);
+
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -31,8 +33,11 @@ function Form() {
           `${BASE_URL_WEATHER}?q=${searchTerm}&appid=${API_KEY_WEATHER}`
         );
         setWeather(data);
+        setError(false);
       } catch (error) {
-        console.log("Error finding destination:", error);
+        setWeather("");
+        setSearchTerm("");
+        setError(true);
       }
     };
     getDestination(searchTerm);
@@ -55,7 +60,8 @@ function Form() {
         </div>
       </form>
       {weather && <Weather weather={weather} />}
-      {!weather && <p>Nothing</p>}
+      {!weather && !error && <p>Loading</p>}
+      {error && <p>Place does not exist. Maybe exist in parallel universe</p>}
     </>
   );
 }
