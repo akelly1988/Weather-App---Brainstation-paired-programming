@@ -28,7 +28,6 @@ function Form() {
         const { data } = await axios.get(
           `${BASE_URL_WEATHER}?q=${searchTerm}&appid=${API_KEY_WEATHER}`
         );
-        console.log(data);
         setWeather(data);
       } catch (error) {
         console.log("Error finding destination:", error);
@@ -38,15 +37,18 @@ function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleChange}
-      />
-      <button type="submit">Search</button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={handleChange}
+        />
+        <button type="submit">Search</button>
+      </form>
+      <Weather />
+    </>
   );
 }
 
