@@ -45,6 +45,7 @@ function Form() {
         value={searchTerm}
         onChange={handleChange}
       />
+      ...
       <button type="submit">Search</button>
     </form>
   );
