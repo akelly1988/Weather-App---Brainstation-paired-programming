@@ -1,0 +1,13 @@
+.weather {
+  &__container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+img {
+  max-width: 48px;
+  max-height: 48px;
+}
