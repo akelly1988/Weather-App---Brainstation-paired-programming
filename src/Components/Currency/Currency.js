@@ -1,4 +1,5 @@
 import React from "react";
+import "./Currency.scss";
 
 function Currency({ currency, gbp }) {
   return (
