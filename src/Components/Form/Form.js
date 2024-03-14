@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import Weather from "../Weather/Weather";
 const API_KEY_WEATHER = "96f23f416e2628f78d7fd10cc947516f";
 const BASE_URL_WEATHER = "https://api.openweathermap.org/data/2.5/weather";
 
