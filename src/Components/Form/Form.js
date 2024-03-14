@@ -10,43 +10,41 @@ function Form() {
   const [searchTerm, setSearchTerm] = useState("");
   const [weather, setWeather] = useState("");
   const [error, setError] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const isFormvalid = () => {
-    if (!searchTerm) return false;
-    return true;
+  const isFormValid = () => {
+    return !!searchTerm;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (!isFormvalid()) {
+    if (!isFormValid()) {
       return;
     }
 
-    console.log(searchTerm);
-    const getDestination = async (searchTerm) => {
-      try {
-        const { data } = await axios.get(
-          `${BASE_URL_WEATHER}?q=${searchTerm}&appid=${API_KEY_WEATHER}`
-        );
-        setWeather(data);
-        setError(false);
-      } catch (error) {
-        setWeather("");
-        setSearchTerm("");
-        setError(true);
-      }
-    };
-    getDestination(searchTerm);
+    try {
+      const { data } = await axios.get(
+        `${BASE_URL_WEATHER}?q=${searchTerm}&appid=${API_KEY_WEATHER}`
+      );
+      setWeather(data);
+      setError(false);
+      setSubmitted(true);
+    } catch (error) {
+      setWeather("");
+      setSearchTerm("");
+      setError(true);
+      setSubmitted(true);
+    }
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="searchBox">
+        <div className={`searchBox ${submitted ? "submitted" : ""}`}>
           <input
             className="searchInput"
             type="text"
@@ -60,8 +58,11 @@ function Form() {
         </div>
       </form>
       {weather && <Weather weather={weather} />}
-      {!weather && !error && <p>Loading</p>}
-      {error && <p>Place does not exist. Maybe exist in parallel universe</p>}
+      {error && (
+        <p className="error">
+          This place does not exist! Maybe exist in parallel universe?
+        </p>
+      )}
     </>
   );
 }
